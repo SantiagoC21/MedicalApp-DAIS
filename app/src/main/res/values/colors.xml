@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores corporativos -->
+    <color name="primary">#1565C0</color>        <!-- Azul médico -->
+    <color name="primary_dark">#0D47A1</color>
+    <color name="secondary">#00695C</color>       <!-- Verde salud -->
+    <color name="secondary_dark">#004D40</color>
+
+    <!-- Estados / alertas -->
+    <color name="success">#2E7D32</color>
+    <color name="warning">#F57F17</color>
+    <color name="error">#C62828</color>
+
+    <!-- Fondos -->
+    <color name="bg_primary">#F5F7FA</color>
+    <color name="bg_card">#FFFFFF</color>
+
+    <!-- Texto -->
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#5C6BC0</color>
+
+    <!-- Prioridad triaje -->
+    <color name="priority_green">#1B5E20</color>
+    <color name="priority_yellow">#F9A825</color>
+    <color name="priority_orange">#E65100</color>
+    <color name="priority_red">#B71C1C</color>
+</resources>

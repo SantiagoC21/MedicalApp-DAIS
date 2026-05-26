@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MedApp</string>
+    <string name="app_subtitle">Gestión de citas y triaje hospitalario</string>
+
+    <!-- Login -->
+    <string name="email_hint">Correo electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="btn_login">Ingresar</string>
+    <string name="go_register">¿No tiene cuenta? Regístrese aquí</string>
+
+    <!-- Registro -->
+    <string name="register_title">Crear cuenta</string>
+    <string name="role_patient">Paciente</string>
+    <string name="role_doctor">Médico</string>
+    <string name="pending_validation">Cuenta en revisión. Un administrador validará sus documentos.</string>
+
+    <!-- Triaje -->
+    <string name="triage_instruction">Coloque el dedo índice sobre la cámara trasera cubriendo completamente el lente y el flash.\n\nPermanezca quieto durante 30 segundos.</string>
+    <string name="btn_start_measure">▶  Iniciar medición</string>
+    <string name="btn_save_triage">💾 Guardar triaje</string>
+
+    <!-- Prioridades -->
+    <string name="priority_green_label">🟢 NORMAL – Sin urgencia inmediata</string>
+    <string name="priority_yellow_label">🟡 MODERADO – Requiere atención en 2 horas</string>
+    <string name="priority_orange_label">🟠 URGENTE – Atención en menos de 30 minutos</string>
+    <string name="priority_red_label">🔴 CRÍTICO – Atención inmediata</string>
+</resources>
