@@ -54,15 +54,56 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         h.tvDateTime.setText("📅 " + a.getScheduleDate() + "  ⏰ " + a.getScheduleTime());
         h.tvStatus  .setText(a.getStatus().name());
 
-        // Color del estado
-        int statusColor;
-        switch (a.getStatus()) {
-            case CONFIRMED:  statusColor = Color.parseColor("#008000"); break;
-            case CANCELLED:  statusColor = Color.parseColor("#CC0000"); break;
-            case COMPLETED:  statusColor = Color.parseColor("#0055CC"); break;
-            default:         statusColor = Color.parseColor("#888888"); break;
+        // Color y fondo del estado (Badge adaptativo moderno)
+        boolean isDarkMode = (h.itemView.getContext().getResources().getConfiguration().uiMode 
+                & android.content.res.Configuration.UI_MODE_NIGHT_MASK) 
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+
+        int textColor;
+        int bgColor;
+        
+        if (isDarkMode) {
+            switch (a.getStatus()) {
+                case CONFIRMED:
+                    textColor = Color.parseColor("#A5D6A7");
+                    bgColor = Color.parseColor("#1B5E20");
+                    break;
+                case CANCELLED:
+                    textColor = Color.parseColor("#EF9A9A");
+                    bgColor = Color.parseColor("#C62828");
+                    break;
+                case COMPLETED:
+                    textColor = Color.parseColor("#90CAF9");
+                    bgColor = Color.parseColor("#1565C0");
+                    break;
+                default:
+                    textColor = Color.parseColor("#CFD8DC");
+                    bgColor = Color.parseColor("#37474F");
+                    break;
+            }
+        } else {
+            switch (a.getStatus()) {
+                case CONFIRMED:
+                    textColor = Color.parseColor("#1B5E20");
+                    bgColor = Color.parseColor("#E8F5E9");
+                    break;
+                case CANCELLED:
+                    textColor = Color.parseColor("#C62828");
+                    bgColor = Color.parseColor("#FFEBEE");
+                    break;
+                case COMPLETED:
+                    textColor = Color.parseColor("#1565C0");
+                    bgColor = Color.parseColor("#E3F2FD");
+                    break;
+                default:
+                    textColor = Color.parseColor("#37474F");
+                    bgColor = Color.parseColor("#ECEFF1");
+                    break;
+            }
         }
-        h.tvStatus.setTextColor(statusColor);
+        
+        h.tvStatus.setTextColor(textColor);
+        h.tvStatus.setBackgroundTintList(android.content.res.ColorStateList.valueOf(bgColor));
 
         // Botón de acción contextual
         if (isDoctorView) {

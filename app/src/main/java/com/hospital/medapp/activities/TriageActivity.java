@@ -323,10 +323,22 @@ public class TriageActivity extends AppCompatActivity implements PPGProcessor.PP
         int color;
         String label;
         switch (priority) {
-            case RED:    color = Color.parseColor("#FF0000"); label = "🔴 CRÍTICO – Atención inmediata";    break;
-            case ORANGE: color = Color.parseColor("#FF6600"); label = "🟠 URGENTE – Atención < 30 min";    break;
-            case YELLOW: color = Color.parseColor("#FFCC00"); label = "🟡 MODERADO – Atención < 2 horas";  break;
-            default:     color = Color.parseColor("#009900"); label = "🟢 NORMAL – Sin urgencia";           break;
+            case RED:
+                color = ContextCompat.getColor(this, R.color.priority_red);
+                label = "🔴 CRÍTICO – Con urgencia médica";
+                break;
+            case ORANGE:
+                color = ContextCompat.getColor(this, R.color.priority_orange);
+                label = "🟠 URGENTE – Atención < 30 min";
+                break;
+            case YELLOW:
+                color = ContextCompat.getColor(this, R.color.priority_yellow);
+                label = "🟡 MODERADO – Atención < 2 horas";
+                break;
+            default:
+                color = ContextCompat.getColor(this, R.color.priority_green);
+                label = "🟢 NORMAL – Sin urgencia";
+                break;
         }
         tvPriorityResult.setTextColor(color);
         tvPriorityResult.setText(isPreview ? "(Preliminar) " + label : label);

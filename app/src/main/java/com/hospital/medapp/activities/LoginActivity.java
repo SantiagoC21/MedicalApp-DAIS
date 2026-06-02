@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hospital.medapp.R;
@@ -68,9 +69,25 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (user.getStatus() == User.Status.PENDING) {
-            Toast.makeText(this,
-                    "Su cuenta está pendiente de validación de documentos.",
-                    Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(this)
+                    .setTitle("Simulación de Aprobación")
+                    .setMessage("Esta cuenta de médico está PENDING (pendiente de validación de documentos).\n\nPara facilitar la evaluación académica, ¿desea auto-aprobar los documentos y activar la cuenta ahora?")
+                    .setPositiveButton("Sí, auto-aprobar", (dialog, which) -> {
+                        boolean ok = userDAO.updateStatus(user.getUserId(), User.Status.ACTIVE);
+                        if (ok) {
+                            user.setStatus(User.Status.ACTIVE);
+                            session.createSession(user);
+                            Toast.makeText(this, "Cuenta aprobada y activada con éxito.", Toast.LENGTH_SHORT).show();
+                            redirectToDashboard();
+                        } else {
+                            Toast.makeText(this, "Error al activar la cuenta.", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        Toast.makeText(this, "Su cuenta está pendiente de validación de documentos.", Toast.LENGTH_LONG).show();
+                    })
+                    .setCancelable(false)
+                    .show();
             return;
         }
 

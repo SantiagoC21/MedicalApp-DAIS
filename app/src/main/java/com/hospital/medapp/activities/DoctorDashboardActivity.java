@@ -47,6 +47,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
         Button btnPresentialTriage = findViewById(R.id.btnPresentialTriage);
         Button btnMyPatients       = findViewById(R.id.btnMyPatients);
+        Button btnManageSchedules  = findViewById(R.id.btnManageSchedules);
         Button btnLogout           = findViewById(R.id.btnLogout);
 
         // Triaje presencial: el médico elige una cita pendiente
@@ -54,6 +55,10 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
         // Ver todos los pacientes con citas asignadas
         btnMyPatients.setOnClickListener(v -> loadAppointments());
+
+        // Gestionar mis horarios
+        btnManageSchedules.setOnClickListener(v ->
+                startActivity(new Intent(this, ManageScheduleActivity.class)));
 
         btnLogout.setOnClickListener(v -> logout());
 

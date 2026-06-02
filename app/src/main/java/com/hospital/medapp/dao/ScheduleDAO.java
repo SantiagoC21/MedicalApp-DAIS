@@ -72,12 +72,20 @@ public class ScheduleDAO {
     public List<Schedule> getSchedulesByDoctor(int doctorId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Schedule> list = new ArrayList<>();
-        Cursor c = db.query(DatabaseHelper.TABLE_SCHEDULES, null,
-                DatabaseHelper.COL_SCHED_DOCTOR_ID + "=?",
-                new String[]{String.valueOf(doctorId)},
-                null, null,
-                DatabaseHelper.COL_SCHED_DATE + ", " + DatabaseHelper.COL_SCHED_TIME);
-        while (c.moveToNext()) list.add(cursorToSchedule(c));
+        String sql = "SELECT s.*, h." + DatabaseHelper.COL_HOSP_NAME + " AS hospital_name "
+                + "FROM " + DatabaseHelper.TABLE_SCHEDULES + " s "
+                + "JOIN " + DatabaseHelper.TABLE_HOSPITALS  + " h "
+                + "  ON s." + DatabaseHelper.COL_SCHED_HOSPITAL_ID + " = h." + DatabaseHelper.COL_HOSP_ID
+                + " WHERE s." + DatabaseHelper.COL_SCHED_DOCTOR_ID + " = ?"
+                + " ORDER BY s." + DatabaseHelper.COL_SCHED_DATE + " DESC, s." + DatabaseHelper.COL_SCHED_TIME + " DESC";
+
+        Cursor c = db.rawQuery(sql, new String[]{String.valueOf(doctorId)});
+        while (c.moveToNext()) {
+            Schedule s = cursorToSchedule(c);
+            int idx = c.getColumnIndex("hospital_name");
+            if (idx >= 0) s.setHospitalName(c.getString(idx));
+            list.add(s);
+        }
         c.close();
         return list;
     }
@@ -100,6 +108,15 @@ public class ScheduleDAO {
         cv.put(DatabaseHelper.COL_SCHED_AVAILABLE, 1);
         int rows = db.update(DatabaseHelper.TABLE_SCHEDULES, cv,
                 DatabaseHelper.COL_SCHED_ID + "=?",
+                new String[]{String.valueOf(scheduleId)});
+        return rows > 0;
+    }
+
+    /** Elimina una franja horaria si no está reservada (mantiene la integridad referencial) */
+    public boolean deleteSchedule(int scheduleId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rows = db.delete(DatabaseHelper.TABLE_SCHEDULES,
+                DatabaseHelper.COL_SCHED_ID + "=? AND " + DatabaseHelper.COL_SCHED_AVAILABLE + "=1",
                 new String[]{String.valueOf(scheduleId)});
         return rows > 0;
     }

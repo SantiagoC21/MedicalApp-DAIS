@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores corporativos adaptados para Dark Mode -->
+    <color name="primary">#64B5F6</color>        <!-- Azul médico claro y vibrante -->
+    <color name="primary_dark">#1565C0</color>
+    <color name="secondary">#4DB6AC</color>       <!-- Verde salud claro y vibrante -->
+    <color name="secondary_dark">#00695C</color>
+
+    <!-- Estados / alertas -->
+    <color name="success">#81C784</color>
+    <color name="warning">#FFF176</color>
+    <color name="error">#E57373</color>
+
+    <!-- Fondos oscuros premium (Glassmorphism/Dark UI moderno) -->
+    <color name="bg_primary">#0F172A</color>      <!-- Azul pizarra oscuro / Slate 900 -->
+    <color name="bg_card">#1E293B</color>         <!-- Slate 800 para tarjetas elevadas -->
+
+    <!-- Texto de alto contraste -->
+    <color name="text_primary">#F8FAFC</color>    <!-- Blanco premium / Slate 50 -->
+    <color name="text_secondary">#94A3B8</color>  <!-- Slate 400 para texto secundario -->
+
+    <!-- Prioridad triaje en modo noche -->
+    <color name="priority_green">#4ADE80</color>
+    <color name="priority_yellow">#FACC15</color>
+    <color name="priority_orange">#FB923C</color>
+    <color name="priority_red">#F87171</color>
+</resources>

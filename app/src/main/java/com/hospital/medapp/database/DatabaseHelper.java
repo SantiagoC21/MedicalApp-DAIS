@@ -177,6 +177,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TRIAGE);
         db.execSQL(CREATE_DOCTOR_DOCS);
         seedHospitals(db);
+        seedDoctorsAndSchedules(db);
     }
 
     @Override
@@ -208,6 +209,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (String h : hospitals) {
             db.execSQL("INSERT INTO " + TABLE_HOSPITALS
                     + " (name, address, phone, specialty, latitude, longitude) VALUES " + h);
+        }
+    }
+
+    /** Carga un doctor de prueba activo y genera horarios disponibles para los siguientes 6 días */
+    private void seedDoctorsAndSchedules(SQLiteDatabase db) {
+        db.execSQL("INSERT INTO " + TABLE_USERS + " (name, email, password, dni, phone, role, status) VALUES "
+                + "('Dr. Carlos Mendoza', 'carlos.mendoza@medapp.com', 'password123', '12345678', '987654321', 'DOCTOR', 'ACTIVE')");
+
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+
+        String[] times = {"09:00", "10:00", "11:00", "14:00", "15:00", "16:00"};
+
+        for (int i = 0; i < 6; i++) {
+            String dateStr = sdf.format(cal.getTime());
+            for (int hospId = 1; hospId <= 5; hospId++) {
+                for (String time : times) {
+                    db.execSQL("INSERT INTO " + TABLE_SCHEDULES
+                            + " (doctor_id, hospital_id, date, time, available) VALUES "
+                            + "(1, " + hospId + ", '" + dateStr + "', '" + time + "', 1)");
+                }
+            }
+            cal.add(java.util.Calendar.DAY_OF_YEAR, 1);
         }
     }
 }

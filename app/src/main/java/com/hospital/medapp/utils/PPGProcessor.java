@@ -239,10 +239,11 @@ public class PPGProcessor {
                         double finalBpm  = estimateBPM(greenSamples, timestamps);
                         double finalSpo2 = estimateSpO2(redSamples, blueSamples);
                         closeCamera();
-                        stopBackgroundThread();
                         if (listener != null) {
-                            new Handler(android.os.Looper.getMainLooper()).post(() ->
-                                    listener.onMeasurementComplete(finalBpm, finalSpo2));
+                            new Handler(android.os.Looper.getMainLooper()).post(() -> {
+                                listener.onMeasurementComplete(finalBpm, finalSpo2);
+                                stopMeasurement();
+                            });
                         }
                     }
                 }
@@ -421,7 +422,9 @@ public class PPGProcessor {
     private void stopBackgroundThread() {
         if (backgroundThread != null) {
             backgroundThread.quitSafely();
-            try { backgroundThread.join(); } catch (InterruptedException ignored) {}
+            if (Thread.currentThread() != backgroundThread) {
+                try { backgroundThread.join(); } catch (InterruptedException ignored) {}
+            }
             backgroundThread  = null;
             backgroundHandler = null;
         }

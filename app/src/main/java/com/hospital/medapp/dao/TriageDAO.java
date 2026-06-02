@@ -111,7 +111,7 @@ public class TriageDAO {
     private ContentValues buildCV(Triage t) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COL_TRIAGE_PATIENT_ID, t.getPatientId());
-        cv.put(DatabaseHelper.COL_TRIAGE_DOCTOR_ID,  t.getDoctorId());
+        cv.put(DatabaseHelper.COL_TRIAGE_DOCTOR_ID,  t.getDoctorId() > 0 ? t.getDoctorId() : null);
         cv.put(DatabaseHelper.COL_TRIAGE_APPT_ID,    t.getAppointmentId() > 0 ? t.getAppointmentId() : null);
         cv.put(DatabaseHelper.COL_TRIAGE_BPM,        t.getHeartRateBpm());
         cv.put(DatabaseHelper.COL_TRIAGE_SPO2,       t.getSpo2Percent());
